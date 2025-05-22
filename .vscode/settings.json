@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"*.gql": "graphql",
+		"philo.h": "c"
+	}
+}
