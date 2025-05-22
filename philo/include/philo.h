@@ -6,12 +6,14 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:37:20 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/22 17:09:04 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:59:59 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 typedef struct s_philo
 {
