@@ -1,6 +1,11 @@
 {
 	"files.associations": {
 		"*.gql": "graphql",
-		"philo.h": "c"
+		"philo.h": "c",
+		"time.h": "c",
+		"array": "c",
+		"string_view": "c",
+		"initializer_list": "c",
+		"numbers": "c"
 	}
 }
