@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:05:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:27:08 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:01:03 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	check_for_death(t_data *data)
 	i = 0;
 	while (i < data->nbr_of_philo)
 	{
-		pthread_mutex_lock(data->write);
+		pthread_mutex_lock(data->data_access);
 		last_meal = data->philos[i].last_meal;
 		is_eating = data->philos[i].is_eating;
 		start = get_time_since_start(data->philos[i].start);
-		pthread_mutex_unlock(data->write);
+		pthread_mutex_unlock(data->data_access);
 		if ((start - last_meal > data->tt_die) && !is_eating)
 		{
-			pthread_mutex_lock(data->write);
+			pthread_mutex_lock(data->data_access);
 			data->dead_flag = 1;
-			pthread_mutex_unlock(data->write);
+			pthread_mutex_unlock(data->data_access);
 			print_dead_lock(&data->philos[i]);
 			return ;
 		}
@@ -51,18 +51,18 @@ void	check_for_meals_goal(t_data *data)
 		return ;
 	while (i < data->nbr_of_philo)
 	{
-		pthread_mutex_lock(data->write);
+		pthread_mutex_lock(data->data_access);
 		meals_eaten = data->philos[i].meals_eaten;
-		pthread_mutex_unlock(data->write);
+		pthread_mutex_unlock(data->data_access);
 		if (meals_eaten < data->meals_goal)
 			break ;
 		i++;
 	}
 	if (i == data->nbr_of_philo)
 	{
-		pthread_mutex_lock(data->write);
+		pthread_mutex_lock(data->data_access);
 		data->meal_flag = 1;
-		pthread_mutex_unlock(data->write);
+		pthread_mutex_unlock(data->data_access);
 	}
 }
 

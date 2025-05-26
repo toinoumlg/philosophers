@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:07:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:23:19 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:00:23 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ void	set_data(int argc, char **argv, t_data *data)
 
 void	alloc_data(t_data *data)
 {
-	data->write = malloc(sizeof(pthread_mutex_t));
+	data->data_access = malloc(sizeof(pthread_mutex_t));
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nbr_of_philo);
 	data->philos = malloc(sizeof(t_philo) * data->nbr_of_philo);
-	if (!data->write || !data->forks || !data->philos)
+	if (!data->data_access || !data->forks || !data->philos)
 		return (exit_alloc(data));
 	memset(data->philos, 0, sizeof(t_philo) * data->nbr_of_philo);
 }
@@ -78,7 +78,7 @@ void	parse_arguments(int argc, char **argv, t_data *data)
 	alloc_data(data);
 	init_mutex(data);
 	set_philos_mutex(data->philos, data->forks, data->nbr_of_philo,
-		data->write);
+		data->data_access);
 	set_philos_data(data->philos, data);
 	return ;
 }

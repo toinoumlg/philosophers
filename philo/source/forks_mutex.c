@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:55:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 17:56:14 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:59:59 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void	init_mutex(t_data *data)
 	i = 0;
 	while (i < data->nbr_of_philo)
 		pthread_mutex_init(&data->forks[i++], NULL);
-	pthread_mutex_init(data->write, NULL);
+	pthread_mutex_init(data->data_access, NULL);
 }

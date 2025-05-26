@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:49:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:07:19 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:59:44 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_data
 	size_t			tt_eat;
 	size_t			tt_sleep;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	*write;
+	pthread_mutex_t	*data_access;
 	t_philo			*philos;
 }					t_data;
 
