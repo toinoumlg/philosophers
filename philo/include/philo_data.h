@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo_data.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:13:43 by amalangu         ###   ########.fr       */
+/*   Created: 2025/05/26 18:20:18 by amalangu          #+#    #+#             */
+/*   Updated: 2025/05/26 18:22:03 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_threads.h"
-#include "data_struct.h"
-#include "parse.h"
-#include "exit.h"
-#include "watcher.h"
+#ifndef PHILO_DATA_H
+# define PHILO_DATA_H
 
-int	main(int argc, char **argv)
-{
-	t_data	data;
+# include "data_struct.h"
 
-	parse_arguments(argc, argv, &data);
-	init_philos_threads(&data);
-	set_watcher(&data);
-	join_philos_threads(&data);
-	return (exit_succes(&data));
-}
+void	set_philos_mutex(t_philo *philos, pthread_mutex_t *forks, int size,
+			pthread_mutex_t *write);
+void	set_philos_data(t_philo *philos, t_data *data);
+
+#endif

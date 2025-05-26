@@ -1,28 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   atoi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:13:43 by amalangu         ###   ########.fr       */
+/*   Created: 2025/05/26 17:15:23 by amalangu          #+#    #+#             */
+/*   Updated: 2025/05/26 18:10:29 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_threads.h"
-#include "data_struct.h"
-#include "parse.h"
-#include "exit.h"
-#include "watcher.h"
+#include <pthread.h>
 
-int	main(int argc, char **argv)
+int	my_atoi(char *str)
 {
-	t_data	data;
+	int	num;
+	int	tmp;
+	int	i;
 
-	parse_arguments(argc, argv, &data);
-	init_philos_threads(&data);
-	set_watcher(&data);
-	join_philos_threads(&data);
-	return (exit_succes(&data));
+	i = -1;
+	num = 0;
+	if (*str == '+')
+		str++;
+	while (str[++i])
+	{
+		tmp = str[i] - 48;
+		num = num * 10 + tmp;
+	}
+	return (num);
+}
+
+size_t	atosize_t(char *str)
+{
+	size_t	num;
+	int		tmp;
+	int		i;
+
+	i = -1;
+	num = 0;
+	if (*str == '+')
+		str++;
+	while (str[++i])
+	{
+		tmp = str[i] - 48;
+		num = num * 10 + tmp;
+	}
+	return (num);
 }

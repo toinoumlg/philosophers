@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   forks_mutex.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:13:43 by amalangu         ###   ########.fr       */
+/*   Created: 2025/05/26 18:14:08 by amalangu          #+#    #+#             */
+/*   Updated: 2025/05/26 18:15:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_threads.h"
-#include "data_struct.h"
-#include "parse.h"
-#include "exit.h"
-#include "watcher.h"
+#ifndef FORKS_MUTEX_H
+# define FORKS_MUTEX_H
 
-int	main(int argc, char **argv)
-{
-	t_data	data;
+# include "data_struct.h"
 
-	parse_arguments(argc, argv, &data);
-	init_philos_threads(&data);
-	set_watcher(&data);
-	join_philos_threads(&data);
-	return (exit_succes(&data));
-}
+void	destroy_mutex(pthread_mutex_t *forks, int size);
+void	init_mutex(t_data *data);
+
+#endif

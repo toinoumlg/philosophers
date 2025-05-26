@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   data_struct.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:13:43 by amalangu         ###   ########.fr       */
+/*   Created: 2025/05/26 17:49:04 by amalangu          #+#    #+#             */
+/*   Updated: 2025/05/26 18:07:19 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_threads.h"
-#include "data_struct.h"
-#include "parse.h"
-#include "exit.h"
-#include "watcher.h"
+#ifndef DATA_STRUCT_H
+# define DATA_STRUCT_H
 
-int	main(int argc, char **argv)
+# include "philo_struct.h"
+# include <pthread.h>
+
+typedef struct s_data
 {
-	t_data	data;
+	int				nbr_of_philo;
+	int				meals_goal;
+	int				dead_flag;
+	int				meal_flag;
+	size_t			tt_die;
+	size_t			tt_eat;
+	size_t			tt_sleep;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	*write;
+	t_philo			*philos;
+}					t_data;
 
-	parse_arguments(argc, argv, &data);
-	init_philos_threads(&data);
-	set_watcher(&data);
-	join_philos_threads(&data);
-	return (exit_succes(&data));
-}
+#endif

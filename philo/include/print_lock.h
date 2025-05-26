@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_lock.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:13:43 by amalangu         ###   ########.fr       */
+/*   Created: 2025/05/26 18:17:01 by amalangu          #+#    #+#             */
+/*   Updated: 2025/05/26 18:18:35 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_threads.h"
-#include "data_struct.h"
-#include "parse.h"
-#include "exit.h"
-#include "watcher.h"
+#ifndef PRINT_LOCK_H
+# define PRINT_LOCK_H
 
-int	main(int argc, char **argv)
-{
-	t_data	data;
+# include "philo_threads.h"
 
-	parse_arguments(argc, argv, &data);
-	init_philos_threads(&data);
-	set_watcher(&data);
-	join_philos_threads(&data);
-	return (exit_succes(&data));
-}
+void	print_think_lock(t_philo *philo);
+void	print_sleep_lock(t_philo *philo);
+void	print_fork_lock(t_philo *philo);
+void	print_eat_lock(t_philo *philo);
+void	print_dead_lock(t_philo *philo);
+
+#endif

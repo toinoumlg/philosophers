@@ -5,7 +5,7 @@
       "name": "Debug",
       "type": "cppdbg",
       "request": "launch",
-      "args": ["4","600","100","200"],
+      "args": ["1","2000","200","0"],
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/antoine/Projects/philosophers/philo",

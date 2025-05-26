@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   forks_mutex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:13:43 by amalangu         ###   ########.fr       */
+/*   Created: 2025/05/26 13:55:14 by amalangu          #+#    #+#             */
+/*   Updated: 2025/05/26 17:56:14 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_threads.h"
 #include "data_struct.h"
-#include "parse.h"
-#include "exit.h"
-#include "watcher.h"
+#include "philo_struct.h"
 
-int	main(int argc, char **argv)
+void	destroy_mutex(pthread_mutex_t *forks, int size)
 {
-	t_data	data;
+	int	i;
 
-	parse_arguments(argc, argv, &data);
-	init_philos_threads(&data);
-	set_watcher(&data);
-	join_philos_threads(&data);
-	return (exit_succes(&data));
+	i = 0;
+	while (i < size)
+		pthread_mutex_destroy(&forks[i++]);
+}
+
+void	init_mutex(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nbr_of_philo)
+		pthread_mutex_init(&data->forks[i++], NULL);
+	pthread_mutex_init(data->write, NULL);
 }

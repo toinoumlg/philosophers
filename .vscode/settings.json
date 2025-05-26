@@ -6,6 +6,19 @@
 		"array": "c",
 		"string_view": "c",
 		"initializer_list": "c",
-		"numbers": "c"
+		"numbers": "c",
+		"random": "c",
+		"string.h": "c",
+		"unistd.h": "c",
+		"pthread.h": "c",
+		"philo_struct.h": "c",
+		"parse.h": "c",
+		"data_struct.h": "c",
+		"philo_threads.h": "c",
+		"stdio.h": "c",
+		"stdlib.h": "c",
+		"philo_data.h": "c",
+		"atoi.h": "c",
+		"forks.h": "c"
 	}
 }
