@@ -6,13 +6,25 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:05:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 19:01:03 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:47:04 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "data_struct.h"
 #include "print_lock.h"
 #include <unistd.h>
+
+static void	ft_usleep(int ms)
+{
+	int	time_sleeped;
+
+	time_sleeped = ms / 10;
+	while (ms)
+	{
+		usleep(time_sleeped);
+		ms = ms - time_sleeped;
+	}
+}
 
 void	check_for_death(t_data *data)
 {
@@ -71,12 +83,13 @@ void	*start_watcher_routine(void *data_add)
 	t_data	*data;
 
 	data = (t_data *)data_add;
-	usleep(data->tt_die * 1000);
+	
+	ft_usleep(data->tt_die * 1000);
 	while (!data->meal_flag && !data->dead_flag)
 	{
 		check_for_death(data);
 		check_for_meals_goal(data);
-		usleep(1000);
+		ft_usleep(1000);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:56:51 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:24:50 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:45:36 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 #include "philo_struct.h"
 #include "print_lock.h"
 #include <unistd.h>
+
+static void	ft_usleep(int ms)
+{
+	int	time_sleeped;
+
+	time_sleeped = ms / 10;
+	while (ms)
+	{
+		usleep(time_sleeped);
+		ms = ms - time_sleeped;
+	}
+}
 
 void	go_think(t_philo *philo)
 {
@@ -27,7 +39,7 @@ void	go_eat(t_philo *philo)
 	pthread_mutex_lock(philo->write);
 	philo->is_eating = 1;
 	pthread_mutex_unlock(philo->write);
-	usleep(philo->tt_eat * 1000);
+	ft_usleep(philo->tt_eat * 1000);
 	unlock_forks(philo->fork_l, philo->fork_r);
 	pthread_mutex_lock(philo->write);
 	philo->last_meal = get_time_since_start(philo->start);
@@ -39,7 +51,7 @@ void	go_eat(t_philo *philo)
 void	go_sleep(t_philo *philo)
 {
 	print_sleep_lock(philo);
-	usleep(philo->tt_sleep * 1000);
+	ft_usleep(philo->tt_sleep * 1000);
 }
 
 void	*start_philo_routine(void *philo_add)
