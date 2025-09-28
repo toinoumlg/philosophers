@@ -6,11 +6,11 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:56:45 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:21:37 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:05:01 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "data_struct.h"
+#include "data.h"
 
 void	set_philos_data(t_philo *philos, t_data *data)
 {
@@ -26,18 +26,18 @@ void	set_philos_data(t_philo *philos, t_data *data)
 	}
 }
 
-void	set_philos_mutex(t_philo *philos, pthread_mutex_t *forks, int size,
+void	set_philos_mutex(t_philo *philos, t_fork *forks, int size,
 		pthread_mutex_t *write)
 {
 	int	i;
 
-	i = -1;
-	while (++i < size - 1)
+	i = 0;
+	while (i < size - 1)
 	{
 		philos[i].id = i + 1;
 		philos[i].fork_l = &forks[i];
 		philos[i].fork_r = &forks[i + 1];
-		philos[i].write = write;
+		philos[i++].write = write;
 	}
 	philos[i].id = i + 1;
 	philos[i].write = write;

@@ -6,16 +6,23 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:13:43 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:57:07 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_threads.h"
-#include "data_struct.h"
-#include "parse.h"
+#include "data.h"
 #include "exit.h"
+#include "parse.h"
+#include "philo_threads.h"
 #include "watcher.h"
 
+/*
+	number_of_philosophers
+	time_to_die
+	time_to_eat
+	time_to_sleep
+	[number_of_times_each_philosopher_must_eat]
+*/
 int	main(int argc, char **argv)
 {
 	t_data	data;

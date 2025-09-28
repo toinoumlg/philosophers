@@ -6,7 +6,7 @@ INCLUDE = -I./include
 SRC_DIR = source
 OBJ_DIR = build
 
-SRC_FILES = main exit forks forks_mutex parse \
+SRC_FILES = main exit forks forks_mutex parsing \
     philo philo_data philo_threads \
     print_lock time watcher atoi
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))

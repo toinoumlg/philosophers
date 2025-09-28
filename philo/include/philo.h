@@ -6,13 +6,13 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:37:20 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:09:20 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:39:34 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-void	*start_philo_routine(void *philo_add);
+void	*philo_routine(void *philo_ptr);
 
 #endif

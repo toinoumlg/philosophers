@@ -6,11 +6,10 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:53:48 by amalangu          #+#    #+#             */
-/*   Updated: 2025/06/18 16:45:34 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:23:58 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_struct.h"
 #include "print_lock.h"
 #include <unistd.h>
 
@@ -26,20 +25,25 @@ static void	ft_usleep(int ms)
 	}
 }
 
-void	unlock_forks(pthread_mutex_t *fork1, pthread_mutex_t *fork2)
+void	set_fork_value(t_fork *fork, int value)
 {
-	if (fork1 == fork2)
-	{
-		pthread_mutex_unlock(fork1);
-		return ;
-	}
-	pthread_mutex_unlock(fork1);
-	pthread_mutex_unlock(fork2);
+	pthread_mutex_lock(&fork->mutex);
+	fork->taken = value;
+	pthread_mutex_unlock(&fork->mutex);
 }
 
-void	pick_up_fork(pthread_mutex_t *fork, t_philo *philo)
+void	release_forks(t_fork *fork_l, t_fork *fork_r)
 {
-	pthread_mutex_lock(fork);
+	set_fork_value(fork_l, 0);
+	if (fork_l == fork_r)
+		return ;
+	set_fork_value(fork_r, 0);
+	
+}
+
+void	pick_up_fork(t_fork *fork, t_philo *philo)
+{
+	set_fork_value(fork, 1);
 	print_fork_lock(philo);
 }
 

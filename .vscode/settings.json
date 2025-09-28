@@ -13,12 +13,14 @@
 		"pthread.h": "c",
 		"philo_struct.h": "c",
 		"parse.h": "c",
-		"data_struct.h": "c",
+		"data.h": "c",
 		"philo_threads.h": "c",
 		"stdio.h": "c",
 		"stdlib.h": "c",
 		"philo_data.h": "c",
 		"atoi.h": "c",
-		"forks.h": "c"
+		"forks.h": "c",
+		"watcher.h": "c",
+		"print_lock.h": "c"
 	}
 }

@@ -6,13 +6,12 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:56:51 by amalangu          #+#    #+#             */
-/*   Updated: 2025/06/18 16:45:36 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:25:13 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "data_struct.h"
+#include "data.h"
 #include "forks.h"
-#include "philo_struct.h"
 #include "print_lock.h"
 #include <unistd.h>
 
@@ -33,19 +32,47 @@ void	go_think(t_philo *philo)
 	print_think_lock(philo);
 }
 
-void	go_eat(t_philo *philo)
+void	old_go_eat(t_philo *philo)
 {
 	pick_up_forks(philo);
 	pthread_mutex_lock(philo->write);
 	philo->is_eating = 1;
 	pthread_mutex_unlock(philo->write);
 	ft_usleep(philo->tt_eat * 1000);
-	unlock_forks(philo->fork_l, philo->fork_r);
+	release_forks(philo->fork_l, philo->fork_r);
 	pthread_mutex_lock(philo->write);
 	philo->last_meal = get_time_since_start(philo->start);
 	philo->is_eating = 0;
 	philo->meals_eaten++;
 	pthread_mutex_unlock(philo->write);
+}
+
+int	is_taken(t_fork *fork)
+{
+	int	value;
+
+	pthread_mutex_lock(&fork->mutex);
+	value = fork->taken;
+	pthread_mutex_unlock(&fork->mutex);
+	return (value);
+}
+
+// taken[0] is fork_l and taken[1] fork_r
+void	go_eat(t_philo *philo)
+{
+	while (1)
+	{
+		if (!is_taken(philo->fork_l) && !is_taken(philo->fork_r))
+		{
+			pick_up_forks(philo);
+			philo->is_eating = 1;
+			ft_usleep(philo->tt_eat * 1000);
+			release_forks(philo->fork_l, philo->fork_r);
+			philo->last_meal = get_time_since_start(philo->start);
+			philo->is_eating = 0;
+			return ;
+		}
+	}
 }
 
 void	go_sleep(t_philo *philo)
@@ -54,13 +81,13 @@ void	go_sleep(t_philo *philo)
 	ft_usleep(philo->tt_sleep * 1000);
 }
 
-void	*start_philo_routine(void *philo_add)
+void	*philo_routine(void *philo_ptr)
 {
 	t_philo	*philo;
 	int		dead_flag;
 	int		meal_flag;
 
-	philo = (t_philo *)philo_add;
+	philo = (t_philo *)philo_ptr;
 	pthread_mutex_lock(philo->write);
 	philo->last_meal = philo->start;
 	philo->is_eating = 0;

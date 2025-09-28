@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 18:10:59 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:11:46 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:46:12 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <pthread.h>
 
-int		my_atoi(char *str);
-size_t	atosize_t(char *str);
+int		ft_atoi(char *str);
 
 #endif

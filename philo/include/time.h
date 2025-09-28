@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 18:25:22 by amalangu          #+#    #+#             */
-/*   Updated: 2025/05/26 18:26:35 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:11:56 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include <pthread.h>
 
-size_t	get_time_since_start(size_t start);
+int	get_time_since_start(__ssize_t start);
 
 #endif
