@@ -6,11 +6,11 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:53:48 by amalangu          #+#    #+#             */
-/*   Updated: 2025/09/18 17:23:58 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/02 18:47:18 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "print_lock.h"
+#include "mutex.h"
 #include <unistd.h>
 
 static void	ft_usleep(int ms)
@@ -25,41 +25,31 @@ static void	ft_usleep(int ms)
 	}
 }
 
-void	set_fork_value(t_fork *fork, int value)
+void	set_value(t_mutex *mutex, int value)
 {
-	pthread_mutex_lock(&fork->mutex);
-	fork->taken = value;
-	pthread_mutex_unlock(&fork->mutex);
+	pthread_mutex_lock(&mutex->mutex);
+	mutex->taken = value;
+	pthread_mutex_unlock(&mutex->mutex);
 }
 
-void	release_forks(t_fork *fork_l, t_fork *fork_r)
+void	release_forks(t_mutex *fork_l, t_mutex *fork_r)
 {
-	set_fork_value(fork_l, 0);
+	set_value(fork_l, 0);
 	if (fork_l == fork_r)
 		return ;
-	set_fork_value(fork_r, 0);
-	
+	set_value(fork_r, 0);
 }
 
-void	pick_up_fork(t_fork *fork, t_philo *philo)
+void	pick_up_fork(t_mutex *fork, t_philo *philo)
 {
-	set_fork_value(fork, 1);
-	print_fork_lock(philo);
+	set_value(fork, 1);
+	print_lock(philo, "has taken a fork");
 }
 
 void	wait_for_death(t_philo *philo)
 {
-	int	dead_flag;
-
-	while (1)
-	{
-		pthread_mutex_lock(philo->write);
-		dead_flag = *philo->dead_flag;
-		pthread_mutex_unlock(philo->write);
-		if (dead_flag)
-			return ;
-		ft_usleep(1000);
-	}
+	while (!is_taken(philo->end))
+		ft_usleep(500);
 }
 
 void	pick_up_forks(t_philo *philo)
@@ -79,5 +69,5 @@ void	pick_up_forks(t_philo *philo)
 		pick_up_fork(philo->fork_r, philo);
 		pick_up_fork(philo->fork_l, philo);
 	}
-	print_eat_lock(philo);
+	print_lock(philo, "is eating");
 }

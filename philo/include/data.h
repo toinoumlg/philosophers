@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:49:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/09/18 17:02:59 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/02 19:30:37 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 
 # include <pthread.h>
 
-typedef struct s_fork
+typedef struct s_mutex
 {
 	int				taken;
 	pthread_mutex_t	mutex;
-}					t_fork;
+}					t_mutex;
+
+typedef struct s_args
+{
+	int				tt_eat;
+	int				tt_sleep;
+	int				tt_die;
+	int				meals_goal;
+	long			start;
+}					t_args;
 
 typedef struct s_philo
 {
@@ -27,29 +36,27 @@ typedef struct s_philo
 	int				id;
 	int				meals_eaten;
 	int				is_eating;
-	int				start;
-	int				tt_sleep;
-	int				tt_eat;
-	int				last_meal;
-	int				*dead_flag;
-	int				*meal_flag;
-	t_fork			*fork_l;
-	t_fork			*fork_r;
-	pthread_mutex_t	*write;
+	long			last_meal;
+	t_args			*args;
+	t_mutex			data_access;
+	t_mutex			*write;
+	t_mutex			*end;
+	t_mutex			*fork_l;
+	t_mutex			*fork_r;
 }					t_philo;
 
 typedef struct s_data
 {
 	int				nbr_of_philo;
-	int				meals_goal;
-	int				dead_flag;
-	int				meal_flag;
-	int				tt_die;
-	int				tt_eat;
-	int				tt_sleep;
-	t_fork			*forks;
-	pthread_mutex_t	data_access;
+	t_args			args;
+	t_mutex			*forks;
+	t_mutex			write;
+	t_mutex			end;
 	t_philo			*philos;
 }					t_data;
+
+int					exit_succes(t_data *data);
+void				exit_parsing(char *str);
+void				exit_alloc(t_data *data);
 
 #endif

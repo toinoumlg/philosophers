@@ -6,14 +6,13 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/09/18 16:57:07 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/02 14:16:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "data.h"
-#include "exit.h"
 #include "parse.h"
-#include "philo_threads.h"
+#include "philo.h"
 #include "watcher.h"
 
 /*

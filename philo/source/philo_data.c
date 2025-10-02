@@ -6,41 +6,39 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:56:45 by amalangu          #+#    #+#             */
-/*   Updated: 2025/09/18 16:05:01 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/02 19:06:19 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "data.h"
+#include "string.h"
 
-void	set_philos_data(t_philo *philos, t_data *data)
+t_philo	new_philo(t_data *data, int i, int j)
 {
-	int	i;
+	t_philo	new;
 
-	i = 0;
-	while (i < data->nbr_of_philo)
-	{
-		philos[i].dead_flag = &data->dead_flag;
-		philos[i].meal_flag = &data->meal_flag;
-		philos[i].tt_eat = data->tt_eat;
-		philos[i++].tt_sleep = data->tt_sleep;
-	}
+	memset(&new, 0, sizeof(t_philo));
+	pthread_mutex_init(&new.data_access.mutex, NULL);
+	new.id = i + 1;
+	new.fork_l = &data->forks[i];
+	new.fork_r = &data->forks[j];
+	new.write = &data->write;
+	new.end = &data->end;
+	new.args = &data->args;
+	return (new);
 }
 
-void	set_philos_mutex(t_philo *philos, t_fork *forks, int size,
-		pthread_mutex_t *write)
+void	set_philos(t_data *data)
 {
-	int	i;
+	int		i;
+	t_philo	*philos;
 
+	philos = data->philos;
 	i = 0;
-	while (i < size - 1)
+	while (i < data->nbr_of_philo - 1)
 	{
-		philos[i].id = i + 1;
-		philos[i].fork_l = &forks[i];
-		philos[i].fork_r = &forks[i + 1];
-		philos[i++].write = write;
+		philos[i] = new_philo(data, i, i + 1);
+		i++;
 	}
-	philos[i].id = i + 1;
-	philos[i].write = write;
-	philos[i].fork_l = &forks[i];
-	philos[i].fork_r = &forks[0];
+	philos[i] = new_philo(data, i, 0);
 }

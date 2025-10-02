@@ -6,78 +6,90 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:05:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/09/18 18:15:03 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/02 19:28:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "data.h"
-#include "print_lock.h"
+#include "mutex.h"
+#include "time.h"
+#include <stdio.h>
 #include <unistd.h>
 
-/// @brief 
-/// @param ms micro seconds
-static void	ft_usleep(int ms)
+long	get_last_meal_value(t_philo *philo)
 {
-	int	time_sleeped;
+	long	last_meal;
 
-	time_sleeped = ms / 10;
-	while (ms)
-	{
-		usleep(time_sleeped);
-		ms = ms - time_sleeped;
-	}
+	while (is_taken(&philo->data_access))
+		usleep(50);
+	set_value(&philo->data_access, 1);
+	last_meal = philo->last_meal;
+	set_value(&philo->data_access, 0);
+	return (last_meal);
 }
 
-void	check_for_death(t_data *data)
+int	is_eating(t_philo *philo)
 {
-	int	i;
-	int	last_meal;
-	int	start;
-	int	is_eating;
+	int	eating;
+
+	while (is_taken(&philo->data_access))
+		usleep(50);
+	set_value(&philo->data_access, 1);
+	eating = philo->is_eating;
+	set_value(&philo->data_access, 0);
+	return (eating);
+}
+
+int	check_for_death(t_data *data)
+{
+	int		i;
+	long	start;
 
 	i = 0;
+	start = get_time_since_start(data->args.start);
 	while (i < data->nbr_of_philo)
 	{
-		pthread_mutex_lock(&data->data_access);
-		last_meal = data->philos[i].last_meal;
-		is_eating = data->philos[i].is_eating;
-		start = get_time_since_start(data->philos[i].start);
-		pthread_mutex_unlock(&data->data_access);
-		if ((start - last_meal > data->tt_die) && !is_eating)
+		if ((start - get_last_meal_value(&data->philos[i]) > data->args.tt_die)
+			&& !is_eating(&data->philos[i]))
 		{
-			pthread_mutex_lock(&data->data_access);
-			data->dead_flag = 1;
-			pthread_mutex_unlock(&data->data_access);
-			print_dead_lock(&data->philos[i]);
-			return ;
+			print_lock(&data->philos[i], "died");
+			set_value(&data->write, 1);
+			set_value(&data->end, 1);
+			return (1);
 		}
 		i++;
 	}
+	return (0);
 }
 
-void	check_for_meals_goal(t_data *data)
+int	get_meals_eaten(t_philo *philo)
 {
-	int	i;
 	int	meals_eaten;
 
+	while (is_taken(&philo->data_access))
+		usleep(100);
+	set_value(&philo->data_access, 1);
+	meals_eaten = philo->meals_eaten;
+	set_value(&philo->data_access, 0);
+	return (meals_eaten);
+}
+
+int	check_for_meals_goal(t_data *data)
+{
+	int	i;
+
 	i = 0;
-	if (data->meals_goal < 0)
-		return ;
+	if (data->args.meals_goal == 0)
+		return (0);
 	while (i < data->nbr_of_philo)
 	{
-		pthread_mutex_lock(&data->data_access);
-		meals_eaten = data->philos[i].meals_eaten;
-		pthread_mutex_unlock(&data->data_access);
-		if (meals_eaten < data->meals_goal)
-			break ;
+		if (get_meals_eaten(&data->philos[i]) < data->args.meals_goal)
+			return (0);
 		i++;
 	}
-	if (i == data->nbr_of_philo)
-	{
-		pthread_mutex_lock(&data->data_access);
-		data->meal_flag = 1;
-		pthread_mutex_unlock(&data->data_access);
-	}
+	set_value(&data->write, 1);
+	set_value(&data->end, 1);
+	return (1);
 }
 
 void	*watcher_routine(void *data_ptr)
@@ -85,12 +97,13 @@ void	*watcher_routine(void *data_ptr)
 	t_data	*data;
 
 	data = (t_data *)data_ptr;
-	ft_usleep(data->tt_die * 500);
-	while (!data->meal_flag && !data->dead_flag)
+	while (1)
 	{
-		check_for_death(data);
-		// check_for_meals_goal(data);
-		ft_usleep(1000);
+		if (check_for_death(data))
+			break ;
+		if (check_for_meals_goal(data))
+			break ;
+		usleep(400);
 	}
 	return (NULL);
 }
