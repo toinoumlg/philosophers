@@ -6,9 +6,9 @@ INCLUDE = -I./include
 SRC_DIR = source
 OBJ_DIR = build
 
-SRC_FILES = main exit forks forks_mutex parsing \
+SRC_FILES = main exit forks mutex parsing \
     philo philo_data philo_threads \
-    print_lock time watcher atoi
+    print_lock ft_time watcher atoi
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEP = $(OBJ:.o=.d)

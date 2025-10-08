@@ -21,6 +21,8 @@
 		"atoi.h": "c",
 		"forks.h": "c",
 		"watcher.h": "c",
-		"print_lock.h": "c"
+		"print_lock.h": "c",
+		"mutex.h": "c",
+		"cstdlib": "c"
 	}
 }

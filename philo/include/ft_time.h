@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   ft_time.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 14:06:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/02 14:48:36 by amalangu         ###   ########.fr       */
+/*   Created: 2025/05/26 18:25:22 by amalangu          #+#    #+#             */
+/*   Updated: 2025/10/08 23:59:54 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <sys/time.h>
+#ifndef FT_TIME_H
+# define FT_TIME_H
 
-long	get_time_since_start(long start)
-{
-	struct timeval	tv;
+# include <pthread.h>
 
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000 - start);
-}
+long	get_time_since_start(long start);
+void	ft_usleep(int ms);
+
+#endif

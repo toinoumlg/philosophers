@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:56:45 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/02 19:06:19 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/08 23:37:39 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ t_philo	new_philo(t_data *data, int i, int j)
 	t_philo	new;
 
 	memset(&new, 0, sizeof(t_philo));
-	pthread_mutex_init(&new.data_access.mutex, NULL);
+	pthread_mutex_init(&new.last_meal.mutex, NULL);
+	pthread_mutex_init(&new.meals_eaten.mutex, NULL);
+	new.meals_eaten.value = 0;
 	new.id = i + 1;
 	new.fork_l = &data->forks[i];
 	new.fork_r = &data->forks[j];
 	new.write = &data->write;
-	new.end = &data->end;
+	new.dead = &data->dead;
 	new.args = &data->args;
 	return (new);
 }
