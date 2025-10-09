@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:05:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/09 20:01:32 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 20:27:09 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	check_for_death(t_data *data)
 	start = get_time_since_start(data->args.start);
 	while (i < data->nbr_of_philo)
 	{
-		if (start
-			- get_last_meal_value(&data->philos[i].last_meal) > data->args.tt_die)
+		if (start - get_last_meal_value(&data->philos[i].last_meal)
+			> data->args.tt_die)
 			return (print_dead_lock(&data->philos[i], data));
 		i++;
 	}
@@ -54,7 +54,6 @@ int	check_for_meals_goal(t_data *data)
 
 void	watcher(t_data *data)
 {
-	usleep(500);
 	if (mutex_value(&data->dead))
 		return ;
 	while (1)
@@ -63,6 +62,6 @@ void	watcher(t_data *data)
 			break ;
 		if (check_for_meals_goal(data))
 			break ;
-		usleep(500);
+		usleep(100);
 	}
 }

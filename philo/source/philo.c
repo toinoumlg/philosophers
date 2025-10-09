@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:56:51 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/09 19:51:30 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 20:18:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	*philo_routine(void *add)
 		return (NULL);
 	set_value_last_meal(&philo->last_meal, 0);
 	go_think(philo);
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->args->tt_eat, philo);
 	while (!mutex_value(philo->dead))
 	{
 		go_eat(philo);

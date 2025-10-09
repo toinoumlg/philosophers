@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 19:49:58 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/09 20:01:33 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 20:14:09 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	print_dead_lock(t_philo *philo, t_data *data)
 				philo->id, "died");
 			break ;
 		}
-		usleep(700);
+		usleep(100);
 	}
 	return (1);
 }

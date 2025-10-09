@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:07:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/09 19:44:01 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 20:25:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	set_data(int argc, char **argv, t_data *data)
 	data->args.tt_die = ft_atoi(argv[2]);
 	data->args.tt_eat = ft_atoi(argv[3]);
 	data->args.tt_sleep = ft_atoi(argv[4]);
-	if (data->nbr_of_philo < 0 || data->args.meals_goal < 0
+	if (data->nbr_of_philo <= 0 || data->args.meals_goal <= 0
 		|| data->args.tt_die < 0 || data->args.tt_eat < 0
 		|| data->args.tt_sleep < 0)
 		return (exit_parsing("Wrong argument values"));

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:06:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/09 15:41:20 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 20:14:01 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_usleep(int ms, t_philo *philo)
 			return ;
 		if (tv.tv_sec * 1000 + tv.tv_usec / 1000 - start > ms / 1000)
 			return ;
-		usleep(700);
+		usleep(100);
 	}
 }
 
