@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   ft_time.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:06:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/08 23:43:45 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:41:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "data.h"
+#include "mutex.h"
 #include <sys/time.h>
 #include <unistd.h>
 
-void	ft_usleep(int ms)
+void	ft_usleep(int ms, t_philo *philo)
 {
-	int	time_sleeped;
+	struct timeval	tv;
+	long			start;
 
-	time_sleeped = ms / 10;
-	while (ms)
+	gettimeofday(&tv, NULL);
+	start = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	while (1)
 	{
-		usleep(time_sleeped);
-		ms = ms - time_sleeped;
+		gettimeofday(&tv, NULL);
+		if (mutex_value(philo->dead))
+			return ;
+		if (tv.tv_sec * 1000 + tv.tv_usec / 1000 - start > ms / 1000)
+			return ;
+		usleep(700);
 	}
 }
 

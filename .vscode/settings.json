@@ -23,6 +23,7 @@
 		"watcher.h": "c",
 		"print_lock.h": "c",
 		"mutex.h": "c",
-		"cstdlib": "c"
+		"cstdlib": "c",
+		"type_traits": "c"
 	}
 }

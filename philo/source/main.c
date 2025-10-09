@@ -6,14 +6,12 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:39:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/02 14:16:10 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:59:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "data.h"
-#include "parse.h"
 #include "philo.h"
-#include "watcher.h"
 
 /*
 	number_of_philosophers
@@ -26,9 +24,11 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	parse_arguments(argc, argv, &data);
-	init_philos_threads(&data);
-	set_watcher(&data);
+	if (parse_arguments(argc, argv, &data))
+		return (1);
+	if (init_philos_threads(&data))
+		return (1);
+	watcher(&data);
 	join_philos_threads(&data);
 	return (exit_succes(&data));
 }

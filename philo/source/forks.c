@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:53:48 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/09 00:20:50 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:39:21 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	pick_up_fork(t_mutex *fork, t_philo *philo)
 			print_lock(philo, "has taken a fork");
 			break ;
 		}
-		usleep(600);
+		usleep(700);
 	}
 	return (0);
 }
@@ -44,7 +44,7 @@ void	pick_up_forks(t_philo *philo)
 	{
 		pick_up_fork(philo->fork_l, philo);
 		while (!mutex_value(philo->dead))
-			usleep(600);
+			usleep(700);
 	}
 	if (philo->id % 2 == 0)
 	{

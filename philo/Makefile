@@ -1,14 +1,14 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -pthread -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g3 -pthread 
 INCLUDE = -I./include
 
 SRC_DIR = source
 OBJ_DIR = build
 
-SRC_FILES = main exit forks mutex parsing \
+SRC_FILES = main exit forks mutex mutex_utils parsing \
     philo philo_data philo_threads \
-    print_lock ft_time watcher atoi
+    print_lock ft_time watcher watcher_utils atoi
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEP = $(OBJ:.o=.d)
@@ -18,6 +18,10 @@ all: $(OBJ_DIR) $(NAME)
 $(NAME): $(OBJ)
 	@echo "Linking $@ executable.."
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+
+fsanitize: $(OBJ)
+	@echo "Linking $@ executable.."
+	@$(CC) $(CFLAGS) -fsanitize=thread $(OBJ) -o philo_sanitize
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "Compiling $< into $@.."

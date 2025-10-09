@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:07:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/02 19:03:04 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:44:01 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void	set_data(int argc, char **argv, t_data *data)
+int	set_data(int argc, char **argv, t_data *data)
 {
 	data->nbr_of_philo = ft_atoi(argv[1]);
 	if (argc == 6)
@@ -29,26 +29,63 @@ void	set_data(int argc, char **argv, t_data *data)
 	if (data->nbr_of_philo < 0 || data->args.meals_goal < 0
 		|| data->args.tt_die < 0 || data->args.tt_eat < 0
 		|| data->args.tt_sleep < 0)
-		exit_parsing("Wrong argument values");
+		return (exit_parsing("Wrong argument values"));
+	return (0);
 }
 
-void	alloc_data(t_data *data)
+void	set_init_forks(t_mutex *mutex, int nbr_of_philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < nbr_of_philo)
+	{
+		mutex->init = 2;
+		mutex->value = 0;
+		i++;
+	}
+}
+
+int	alloc_data(t_data *data)
 {
 	data->forks = malloc(sizeof(t_mutex) * data->nbr_of_philo);
-	data->philos = malloc(sizeof(t_philo) * data->nbr_of_philo);
-	if (!data->forks || !data->philos)
+	if (!data->forks)
 		return (exit_alloc(data));
+	data->philos = malloc(sizeof(t_philo) * data->nbr_of_philo);
+	if (!data->philos)
+	{
+		free(data->forks);
+		return (exit_alloc(data));
+	}
 	memset(data->philos, 0, sizeof(t_philo) * data->nbr_of_philo);
 	memset(data->forks, 0, sizeof(t_mutex) * data->nbr_of_philo);
+	set_init_forks(data->forks, data->nbr_of_philo);
+	data->start.init = 2;
+	data->dead.init = 2;
+	data->write.init = 2;
+	return (0);
 }
 
-void	parse_arguments(int argc, char **argv, t_data *data)
+int	free_parsing(t_data *data)
+{
+	ft_mutex_destroy(data);
+	free(data->forks);
+	free(data->philos);
+	return (1);
+}
+
+int	parse_arguments(int argc, char **argv, t_data *data)
 {
 	memset(data, 0, sizeof(t_data));
 	if (argc < 5 || argc > 6)
 		return (exit_parsing("Wrong argument count"));
-	set_data(argc, argv, data);
-	alloc_data(data);
-	init_mutex(data);
-	set_philos(data);
+	if (set_data(argc, argv, data))
+		return (1);
+	if (alloc_data(data))
+		return (1);
+	if (init_mutex(data))
+		return (free_parsing(data));
+	if (set_philos(data))
+		return (free_parsing(data));
+	return (0);
 }

@@ -6,24 +6,26 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:49:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/09 00:02:13 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:49:00 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef data_H
-# define data_H
+#ifndef DATA_H
+# define DATA_H
 
 # include <pthread.h>
 
 typedef struct s_mutex
 {
 	int				value;
+	int				init;
 	pthread_mutex_t	mutex;
 }					t_mutex;
 
 typedef struct s_lmutex
 {
 	long			value;
+	int				init;
 	pthread_mutex_t	mutex;
 }					t_lmutex;
 
@@ -45,6 +47,7 @@ typedef struct s_philo
 	t_mutex			meals_eaten;
 	t_mutex			*write;
 	t_mutex			*dead;
+	t_mutex			*start;
 	t_mutex			*fork_l;
 	t_mutex			*fork_r;
 }					t_philo;
@@ -56,11 +59,16 @@ typedef struct s_data
 	t_mutex			*forks;
 	t_mutex			write;
 	t_mutex			dead;
+	t_mutex			start;
 	t_philo			*philos;
 }					t_data;
 
+int					parse_arguments(int argc, char **argv, t_data *data);
+
+void				watcher(t_data *data);
+
 int					exit_succes(t_data *data);
-void				exit_parsing(char *str);
-void				exit_alloc(t_data *data);
+int					exit_parsing(char *str);
+int					exit_alloc(t_data *data);
 
 #endif
