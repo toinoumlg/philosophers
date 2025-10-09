@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:05:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/10/09 20:27:09 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/10/09 20:32:58 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_for_meals_goal(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data->args.meals_goal == 0)
+	if (data->args.meals_goal == -2)
 		return (0);
 	while (i < data->nbr_of_philo)
 	{
